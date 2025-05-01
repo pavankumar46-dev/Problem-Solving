@@ -5,60 +5,100 @@ class LinkedListNode:
         
 class LinkedList:
     def __init__(self):
-        self.headNode=None
+        self.headNode = None
         
     def insertAtBeginning(self, data):
-        new_node = LinkedListNode(data=data, nextNode=self.headNode)
-        self.headNode = new_node
+        newNode = LinkedListNode(data=data, nextNode=self.headNode)
+        self.headNode = newNode
         
-    def searchLinkedList(self, value):
-        current = self.headNode
-        
-        while current:
-            if current.data == value:
-                print(str(current.data))
-                return current
+    def insertAtIndex(self, value, index):
+        if index == 1:
+            self.insertAtBeginning(value)
+            
+        else:
+            current = self.headNode
+            prevNode = None
+            count = 1
                 
-            else:
+            while current:
+                if count == index-1:
+                    prevNode = current
+                if count == index:
+                    newNode = LinkedListNode(data=value, nextNode=current)
+                    current = newNode
+                    prevNode.nextNode = current
+                    break
+                    
                 current = current.nextNode
-        print(None)    
-        return None
-        
-    def insertIntoLinkedList(self, value, index):
+                count += 1
+            
+    def deleteAtIndex(self, index):
         current = self.headNode
-        prevNode = None
-        count = 1
-        while current:
-            if count == index-1:
-                prevNode = current
-            if count == index:
-                newNode = LinkedListNode(data=value, nextNode=current)
-                current = newNode
-                prevNode.nextNode = current
-                return 
-            else:
+        if index == 1: 
+            self.headNode = current.nextNode
+            
+        else:
+            count = 1
+            prevNode = None
+            
+            while current:
+                if count == index-1:
+                    prevNode = current
+                    
+                if count == index:
+                    prevNode.nextNode = current.nextNode
+                    current = current.nextNode
+                    break
+                    
                 current = current.nextNode
                 count += 1
                 
+    def searchValueInLinkedList(self, value):
+        current = self.headNode
+        count = 1
+        while current:
+            if current.data == value:
+                print(f'Value found at index: {count}')
+                return
+            
+            current = current.nextNode
+            count += 1
+            
+        print(f'Value not found')
+        return
+            
+                
+                
     def printLinkedList(self):
-        if self.headNode is None:
-            print("Linked List is empty")
-            return
-        
-        currentNode = self.headNode
+        current = self.headNode
         llstr = ""
-        while currentNode:
-            llstr = llstr+str(currentNode.data)+"-->"
-            currentNode = currentNode.nextNode
+        while current:
+            llstr = llstr+str(current.data)+"->"
+            current = current.nextNode
             
-        print(llstr+str(currentNode))
+        print(llstr+"None")
+        
+ls = LinkedList()
+######### Creating linked list ###################
+ls.insertAtBeginning(10)
+ls.insertAtBeginning(12)
+ls.insertAtBeginning(13)
+ls.insertAtBeginning(14)
+ls.insertAtBeginning(15)
+ls.insertAtBeginning(16)
+print("Linked List aftr insertion")
+ls.printLinkedList()
+######### Inserting a new at index ###################
+ls.insertAtIndex(11, 3)
+print("Linked List after insertion at index 1")
+ls.printLinkedList()
+######### Deletion of value from linked list ###################
+ls.deleteAtIndex(2)
+print("Linked List after deletion at index 1")
+ls.printLinkedList()
+######### Searching for a value in linked list ###################
+ls.searchValueInLinkedList(1)
+
             
-l1 = LinkedList()
-l1.insertAtBeginning(10)
-l1.insertAtBeginning(12)
-l1.insertAtBeginning(14)
-l1.insertAtBeginning(15)
-l1.printLinkedList()
-l1.insertIntoLinkedList(13, 3)
-l1.printLinkedList()
-            
+        
+        
